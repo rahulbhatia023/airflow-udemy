@@ -4,8 +4,5 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-
-[dev-packages]
-
-[requires]
-python_version = "3.8"
+apache-airflow = "2.3.0"
+black = "22.3.0"
