@@ -2,6 +2,7 @@ from datetime import datetime
 
 from airflow.models import DAG
 from airflow.providers.sqlite.operators.sqlite import SqliteOperator
+from airflow.providers.http.sensors.http import HttpSensor
 
 default_args = {"start_date": datetime(2020, 1, 1)}
 
@@ -24,4 +25,8 @@ with DAG(
                 email TEXT NOT NULL PRIMARY KEY
             );
             """,
+    )
+
+    is_api_available = HttpSensor(
+        task_id="is_api_available", http_conn_id="user_api", endpoint="api/"
     )
