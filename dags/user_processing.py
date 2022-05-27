@@ -45,7 +45,7 @@ with DAG(
         task_id="create_table",
         sqlite_conn_id="db_sqlite",
         sql="""
-            CREATE TABLE users(
+            CREATE TABLE IF NOT EXISTS users(
                 firstname TEXT NOT NULL,
                 lastname TEXT NOT NULL,
                 country TEXT NOT NULL,
@@ -76,4 +76,12 @@ with DAG(
     storing_user = BashOperator(
         task_id="storing_user",
         bash_command='echo -e ".separator ","\n.import /tmp/processed_user.csv users" | sqlite3 /Users/rahulbhatia/airflow/airflow.db',
+    )
+
+    (
+        create_table
+        >> is_api_available
+        >> extracting_user
+        >> processing_user
+        >> storing_user
     )
