@@ -21,13 +21,6 @@ with DAG(
         return_json_dict=True,
     )
 
-    ge_filesystem_profiler_validate = GreatExpectationsOperator(
-        task_id="ge_filesystem_profiler_validate",
-        data_context_root_dir=ge_root_dir,
-        checkpoint_name="checkpoint_filesystem_profiler_demo",
-        return_json_dict=True,
-    )
-
     ge_postgres_validate = GreatExpectationsOperator(
         task_id="ge_postgres_validate",
         data_context_root_dir=ge_root_dir,
@@ -35,4 +28,4 @@ with DAG(
         return_json_dict=True,
     )
 
-    ge_filesystem_validate >> ge_filesystem_profiler_validate >> ge_postgres_validate
+    ge_filesystem_validate >> ge_postgres_validate
